@@ -320,7 +320,7 @@
                       </h5>
                     </div>
                     <div>
-                      <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                      <form method="post" role="form" class="php-email-form" id="contact-form">
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
@@ -397,6 +397,37 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="https://cdn.emailjs.com/sdk/2.6.4/email.min.js"></script>
+<script>
+  (function() {
+    // Initialize EmailJS with your user ID
+    emailjs.init('shahanask5s@gmail.com');
+
+    // Handle the form submission
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Get the form data
+      var formData = {
+        name: this.name.value,
+        email: this.email.value,
+        message: this.message.value
+      };
+
+      // Send the email
+      emailjs.send('service_qx8xdwg', '', formData)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          alert('Your message was sent successfully!');
+          // Optionally, clear the form fields after successful submission
+          document.getElementById('contact-form').reset();
+        }, function(error) {
+          console.log('FAILED...', error);
+          alert('Sorry, there was an error sending your message. Please try again later.');
+        });
+    });
+  })();
+</script>
 
 </body>
 
